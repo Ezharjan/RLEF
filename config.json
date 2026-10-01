@@ -1,0 +1,424 @@
+{
+  "$schema": "./config.schema.json",
+  "site": {
+    "title": "Reinforcement Learning from Ecological Feedback (RLEF): A Framework for Aligning Language-Model Planning with Planetary Boundaries",
+    "venue": "AAAI Fall Symposium Series 2026",
+    "description": "RLEF grounds language-model plans into simulator-executable interventions and scores their modeled consequences against planetary-boundary constraints and a separate task-specific utility.",
+    "keywords": "Reinforcement Learning from Ecological Feedback, RLEF, AI Alignment, Large Language Models, Planning, Planetary Boundaries, Constrained Reinforcement Learning, Climate Policy, Integrated Assessment Models, Carbon Markets, AAAI Fall Symposium Series 2026",
+    "favicon": "favicon.ico",
+    "lang": "en",
+    "url": "",
+    "publicationDate": "2026",
+    "authorNote": "<sup>*</sup>Equal contribution"
+  },
+  "authors": [
+    {
+      "name": "Zhangfei Yang",
+      "url": "https://zhangfeiy.github.io/",
+      "affiliations": [
+        1
+      ],
+      "note": "*"
+    },
+    {
+      "name": "Aizierjiang Aiersilan",
+      "url": "https://ezharjan.github.io/",
+      "affiliations": [
+        1
+      ],
+      "note": "*"
+    }
+  ],
+  "affiliations": [
+    {
+      "id": 1,
+      "name": "The George Washington University"
+    }
+  ],
+  "links": [
+    {
+      "type": "slides",
+      "label": "Slides",
+      "icon": "fas fa-chalkboard-teacher",
+      "url": "RLEF_AizierjiangAiersilan_silides4AAAI2026FSS.pdf",
+      "enabled": true,
+      "download": true
+    },
+    {
+      "type": "confab",
+      "label": "Confab",
+      "icon": "fas fa-calendar-check",
+      "url": "https://cal.com/ezhar/30min",
+      "enabled": true
+    },
+    {
+      "type": "paper",
+      "label": "Paper",
+      "icon": "fas fa-file-pdf",
+      "url": "https://aaai.org/conference/fall-symposia/2026-fall-symposium-series-2/",
+      "enabled": true
+    }
+  ],
+  "abstract": {
+    "title": "Abstract",
+    "body": "Large language models are increasingly considered for planning tasks in energy, infrastructure, and climate policy, yet their alignment mechanisms rarely evaluate the long-horizon physical consequences of the plans they generate. Preference-based methods can incorporate environmental values, but they leave evaluators to infer consequences that may depend on decades of interacting ecological and economic dynamics. We propose <b>Reinforcement Learning from Ecological Feedback (RLEF)</b>, a framework in which language-model proposals are grounded into simulator-executable interventions, their consequences are projected from the observed planetary state by climate-economy or Earth-system models, and the resulting trajectories are scored against explicit ecological constraints together with a separate task-specific utility term for economic and distributional objectives. The constraints are organized by the Planetary Boundaries framework, whose 2023 assessment finds six of nine boundaries already transgressed, so that feedback must register movement back toward the safe operating space and not only the avoidance of new transgressions. We formalize RLEF as a penalty-based objective, identify it as a fixed-multiplier Lagrangian relaxation of a constrained reinforcement-learning problem, and thereby locate its contribution in the feedback architecture rather than in a new policy-optimization algorithm. International carbon-market design serves as an illustrative example of how the framework could be instantiated. RLEF is presented as a conceptual and formal framework whose main obstacles are grounding fidelity, simulator misspecification and uncertainty, computational cost, normative specification, and the absence of empirical validation."
+  },
+  "sections": [
+    {
+      "type": "list",
+      "title": "Contributions",
+      "ordered": true,
+      "align": "left",
+      "items": [
+        "<b>Diagnosis.</b> We identify the limitations of text-level preference feedback for climate-planning problems whose relevant consequences are delayed and mediated by complex physical systems.",
+        "<b>Formalization.</b> We formalize RLEF as a simulator-mediated feedback architecture and show that its penalty formulation corresponds to a <b>fixed-multiplier Lagrangian relaxation</b> of a constrained reinforcement-learning problem.",
+        "<b>Illustration.</b> We use international carbon-market design as an illustrative example of how the framework could be instantiated in a climate-policy setting.",
+        "<b>Open problems.</b> We characterize the framework's principal unresolved problems: natural-language action grounding, simulator fidelity and uncertainty, computational cost, normative specification, and empirical validation."
+      ]
+    },
+    {
+      "type": "group",
+      "title": "The Limits of Anthropocentric Alignment",
+      "blocks": [
+        {
+          "type": "text",
+          "align": "justify",
+          "body": "We use <i>anthropocentric alignment</i> for schemes in which evaluative authority rests with human judgments of candidate outputs, or with model judgments trained to approximate them. Such schemes can represent environmental values, but ecological consequences enter their feedback only insofar as the evaluator can recognize and assess them from the information available at evaluation time. A carbon-market rule, energy-transition plan, or infrastructure policy can appear reasonable in language while producing undesirable outcomes once its effects propagate through the systems it acts on. RLEF therefore introduces modeled ecological trajectories, anchored in the observed planetary state, as an additional source of evidence, so that the expected physical consequences of a proposal need not rest solely on the evaluator's own forecast."
+        },
+        {
+          "type": "list",
+          "ordered": false,
+          "align": "left",
+          "items": [
+            "<b>Long-horizon consequences.</b> Preference-based alignment does not preclude long-horizon reasoning, but text-level evaluation places the burden of forecasting decades of interacting physical and economic dynamics on the evaluator. RLEF lets the modeled consequences, and the temporal assumptions behind them, enter the evaluation explicitly.",
+            "<b>Bounded ecological evaluation.</b> Biodiversity loss, freshwater stress, ocean acidification, and cumulative emissions are properties of system trajectories rather than of the linguistic form of a proposal. RLEF separates which outcomes should be valued, a matter for human and societal judgment, from what physical consequences an intervention is expected to produce, on which external models can provide additional evidence.",
+            "<b>Reward misspecification.</b> Explicit consequence modeling relocates the risk of reward misspecification rather than removing it. Errors in grounding, simulator fidelity, the ecological quantities measured, or the utility specification can reward proposals that perform well within the evaluation pipeline but not in the system it represents. The assumptions behind these components are more inspectable than an unaided judgment of downstream consequences, yet they remain part of the alignment problem."
+          ]
+        }
+      ]
+    },
+    {
+      "type": "group",
+      "title": "Planetary Boundaries as Ecological Constraints",
+      "blocks": [
+        {
+          "type": "text",
+          "align": "justify",
+          "body": "RLEF organizes its ecological constraints with the Planetary Boundaries framework, which identifies nine critical Earth-system processes and defines control variables and boundary levels intended to characterize a safe operating space for humanity. Its multidimensionality matters: mitigation pathways that rely heavily on biomass-based negative emissions can reduce atmospheric carbon while pushing land-system change, biosphere integrity, and biogeochemical flows beyond their boundaries (Heck et al., 2018), a trade-off that a carbon-only objective would not register."
+        },
+        {
+          "type": "table",
+          "caption": "<b>Planetary boundaries.</b> The nine Earth-system processes of the framework and their status at the global level in the 2023 assessment of Richardson et al., which finds six of them transgressed.",
+          "columns": [
+            {
+              "header": "Earth-system process",
+              "align": "left"
+            },
+            {
+              "header": "Global status (2023)"
+            }
+          ],
+          "rows": [
+            {
+              "cells": [
+                "Climate change",
+                {
+                  "v": "Transgressed",
+                  "class": "flag"
+                }
+              ]
+            },
+            {
+              "cells": [
+                "Biosphere integrity",
+                {
+                  "v": "Transgressed",
+                  "class": "flag"
+                }
+              ]
+            },
+            {
+              "cells": [
+                "Ocean acidification",
+                {
+                  "v": "Not transgressed",
+                  "class": "ok"
+                }
+              ]
+            },
+            {
+              "cells": [
+                "Freshwater change",
+                {
+                  "v": "Transgressed",
+                  "class": "flag"
+                }
+              ]
+            },
+            {
+              "cells": [
+                "Land-system change",
+                {
+                  "v": "Transgressed",
+                  "class": "flag"
+                }
+              ]
+            },
+            {
+              "cells": [
+                "Biogeochemical flows",
+                {
+                  "v": "Transgressed",
+                  "class": "flag"
+                }
+              ]
+            },
+            {
+              "cells": [
+                "Stratospheric ozone depletion",
+                {
+                  "v": "Not transgressed",
+                  "class": "ok"
+                }
+              ]
+            },
+            {
+              "cells": [
+                "Atmospheric aerosol loading",
+                {
+                  "v": "Not transgressed",
+                  "class": "ok"
+                }
+              ]
+            },
+            {
+              "cells": [
+                "Novel entities",
+                {
+                  "v": "Transgressed",
+                  "class": "flag"
+                }
+              ]
+            }
+          ],
+          "legend": "Transgressing a boundary does not imply immediate catastrophic change at a single threshold; movement beyond it, through a zone of increasing risk, is associated with a growing likelihood of large-scale, abrupt, or irreversible environmental change."
+        },
+        {
+          "type": "callout",
+          "variant": "info",
+          "body": "<b>Feedback must register restoration.</b> Present-day planning does not begin from an ecologically safe state. For a transgressed boundary, a trajectory carries a nonzero violation cost from the start of the horizon, so feedback must distinguish movement back toward the safe operating space from movement farther away, not only whether a future threshold is crossed."
+        },
+        {
+          "type": "text",
+          "align": "justify",
+          "body": "The safe and just Earth-system boundaries of Rockström et al. (2023) add an explicit justice dimension: an aggregate environmental outcome can satisfy a global safety criterion while still exposing particular populations to unacceptable harm. This perspective motivates RLEF's distinction between biophysical constraints, represented by boundary variables, and distributive objectives such as energy access, regional welfare, development needs, and transition costs, represented in the utility component. Keeping the two apart makes the source of normative choices visible rather than presenting distributional judgments as if they followed mechanically from physical boundary values."
+        }
+      ]
+    },
+    {
+      "type": "group",
+      "title": "The RLEF Framework",
+      "blocks": [
+        {
+          "type": "text",
+          "align": "justify",
+          "body": "RLEF introduces an <b>Ecological Reward Model (ERM)</b> as a consequence-based feedback channel for language-model planning. Unlike a reward model in Reinforcement Learning from Human Feedback (RLHF), the ERM is not fitted to preference data. It is a computational pipeline that grounds proposals into simulator-executable interventions, projects their consequences with a domain model such as an Integrated Assessment Model (IAM), a physical climate model, or an energy-system simulator, and scores the resulting trajectories against ecological constraints and task-specific utility."
+        },
+        {
+          "type": "html",
+          "align": "left",
+          "body": "<div class=\"step-cards\"><div class=\"step-card\"><span class=\"step-num\">Step 1</span><span class=\"step-title\">Propose</span><span class=\"step-math\">\\(a \\sim \\pi_\\theta(\\cdot \\mid c)\\)</span><span class=\"step-text\">The language-model policy generates a complete natural-language policy proposal for the planning context \\(c\\).</span></div><div class=\"step-card\"><span class=\"step-num\">Step 2</span><span class=\"step-title\">Ground</span><span class=\"step-math\">\\(\\hat{a} = g(a)\\)</span><span class=\"step-text\">A grounding function maps the proposal into a structured, simulator-executable intervention.</span></div><div class=\"step-card\"><span class=\"step-num\">Step 3</span><span class=\"step-title\">Simulate</span><span class=\"step-math\">\\(\\tau(\\hat{a}) = (s_0, \\ldots, s_H)\\)</span><span class=\"step-text\">An environmental simulator projects the trajectory from the observed initial state \\(s_0\\).</span></div><div class=\"step-card\"><span class=\"step-num\">Step 4</span><span class=\"step-title\">Score</span><span class=\"step-math\">\\(R_{\\mathrm{ERM}}(a)\\)</span><span class=\"step-text\">The ERM combines task-specific utility with penalties for planetary-boundary transgression along the trajectory.</span></div><div class=\"step-card\"><span class=\"step-num\">Step 5</span><span class=\"step-title\">Update</span><span class=\"step-math\">\\(\\pi_{\\theta_k} \\rightarrow \\pi_{\\theta_{k+1}}\\)</span><span class=\"step-text\">The score serves as the reward for KL-regularized policy optimization or induces preference pairs for Direct Preference Optimization (DPO).</span></div></div>"
+        },
+        {
+          "type": "subtitle",
+          "text": "The Ecological Reward Model"
+        },
+        {
+          "type": "text",
+          "align": "justify",
+          "body": "Let \\(\\mathcal{I} \\subseteq \\{1, \\ldots, 9\\}\\) denote the set of planetary boundaries whose control variables the simulator represents; boundaries outside \\(\\mathcal{I}\\) contribute no feedback and should be declared as such. For each \\(i \\in \\mathcal{I}\\), \\(B_i(s_t)\\) denotes the relevant control variable, or set of control variables, at state \\(s_t\\), and a boundary-specific normalized transgression function \\(\\phi_i(B_i(s_t); L_i)\\) satisfies \\(\\phi_i \\leq 0\\) on the safe side of the boundary specification \\(L_i\\), while \\(\\phi_i > 0\\) increases with the degree of transgression beyond it. Because the framework provides no uniform risk scale across processes, this normalization is a modeling choice rather than a quantity the framework supplies. The violation cost is"
+        },
+        {
+          "type": "html",
+          "align": "left",
+          "body": "<div class=\"equation\">\\[ C_i(s_t) = \\Big[ \\max\\big( 0,\\ \\phi_i\\big(B_i(s_t); L_i\\big) \\big) \\Big]^{\\kappa}, \\tag{1} \\]</div>"
+        },
+        {
+          "type": "text",
+          "align": "justify",
+          "body": "where \\(\\kappa \\geq 1\\) controls how rapidly the penalty grows with transgression. With penalty weights \\(w_i \\geq 0\\), a stage utility \\(U(s_t, \\hat{a})\\) for task-specific objectives such as economic output, energy access, or distributional welfare, and a temporal weight \\(\\gamma \\in (0, 1]\\), the ecological reward of a proposal \\(a\\), evaluated along \\(\\tau(g(a))\\), is"
+        },
+        {
+          "type": "html",
+          "align": "left",
+          "body": "<div class=\"equation\">\\[ R_{\\mathrm{ERM}}(a) = \\sum_{t=0}^{H} \\gamma^{t} \\Big[ U(s_t, \\hat{a}) - \\sum_{i \\in \\mathcal{I}} w_i\\, C_i(s_t) \\Big]. \\tag{2} \\]</div>"
+        },
+        {
+          "type": "text",
+          "align": "justify",
+          "body": "The boundary terms carry information about ecological state, whereas judgments about how welfare, energy access, or burden sharing should be weighed, and how severely transgressions should be penalized, reside in \\(U\\), \\(\\gamma\\), \\(w_i\\), \\(\\kappa\\), and \\(\\phi_i\\), where they can be inspected. Because several boundaries are already transgressed, \\(C_i(s_0)\\) may be positive at the start of a rollout. For proposals evaluated from the same initial state, this initial cost is common to all candidates and therefore does not affect their ranking; differences arise from how their subsequent trajectories reduce or deepen the existing transgression."
+        },
+        {
+          "type": "subtitle",
+          "text": "Policy Optimization"
+        },
+        {
+          "type": "text",
+          "align": "justify",
+          "body": "The ERM can be coupled with existing policy-optimization methods. For example, it can serve as the reward signal in a KL-regularized objective of the form used in RLHF:"
+        },
+        {
+          "type": "html",
+          "align": "left",
+          "body": "<div class=\"equation\">\\[ J(\\theta) = \\mathbb{E}_{c \\sim \\mathcal{D}} \\Big[ \\mathbb{E}_{a \\sim \\pi_\\theta(\\cdot \\mid c)} \\big[ R_{\\mathrm{ERM}}(a) \\big] - \\beta\\, D_{\\mathrm{KL}}\\big( \\pi_\\theta(\\cdot \\mid c) \\,\\|\\, \\pi_{\\mathrm{ref}}(\\cdot \\mid c) \\big) \\Big], \\tag{3} \\]</div>"
+        },
+        {
+          "type": "text",
+          "align": "justify",
+          "body": "where \\(\\mathcal{D}\\) is a distribution over planning contexts, \\(\\pi_{\\mathrm{ref}}\\) is the initial instruction-tuned policy, and \\(\\beta > 0\\) sets the strength of the KL regularization that limits departures from \\(\\pi_{\\mathrm{ref}}\\)."
+        },
+        {
+          "type": "text",
+          "align": "justify",
+          "body": "RLEF can also be instantiated through preference optimization. Several candidate plans are sampled, grounded, and simulated, and higher-scoring plans are paired against lower-scoring alternatives to form <b>consequence-derived preferences</b> for DPO. These preferences are not judgments elicited from an evaluator; their ordering is induced by the modeled consequences of each proposal under the specified simulator, ecological constraints, and utility function. Because policy updates change the distribution of generated plans, the iterative variant in Algorithm 1 regenerates ecological feedback in every round, uses the current policy as the DPO reference, and discards pairs with equal scores."
+        },
+        {
+          "type": "html",
+          "align": "left",
+          "body": "<div class=\"algorithm\"><div class=\"algorithm-title\"><b>Algorithm 1</b> Iterative RLEF with Consequence-Derived Preferences</div><div class=\"algorithm-io\"><b>Require:</b> Initial policy \\(\\pi_{\\mathrm{ref}}\\); simulator \\(\\mathcal{S}_{\\mathrm{env}}\\); grounding function \\(g\\); context set \\(\\mathcal{D}\\) with an initial state \\(s_0\\) for each context; ecological specification \\(\\{\\phi_i, L_i, w_i\\}_{i \\in \\mathcal{I}}\\) and \\(\\kappa\\); utility \\(U\\); temporal weight \\(\\gamma\\); rounds \\(K\\)</div><div class=\"algorithm-io\"><b>Ensure:</b> Updated policy \\(\\pi_{\\theta_K}\\)</div><ol class=\"algorithm-lines\"><li class=\"ind0\">Initialize \\(\\pi_{\\theta_0} \\leftarrow \\pi_{\\mathrm{ref}}\\)</li><li class=\"ind0\"><b>for</b> \\(k = 0, \\ldots, K-1\\) <b>do</b></li><li class=\"ind1\">Initialize preference buffer \\(\\mathcal{B}_k \\leftarrow \\emptyset\\)</li><li class=\"ind1\"><b>for</b> each context \\(c \\in \\mathcal{D}\\) <b>do</b></li><li class=\"ind2\">Sample candidate plans \\(a_1, a_2 \\sim \\pi_{\\theta_k}(\\cdot \\mid c)\\)</li><li class=\"ind2\">Ground \\(\\hat{a}_j \\leftarrow g(a_j)\\) for \\(j = 1, 2\\)</li><li class=\"ind2\">Simulate \\(\\tau_j \\leftarrow \\mathcal{S}_{\\mathrm{env}}(s_0, \\hat{a}_j)\\) for \\(j = 1, 2\\)</li><li class=\"ind2\">Compute \\(R_{\\mathrm{ERM}}(a_j)\\) from \\(\\tau_j\\) for \\(j = 1, 2\\)</li><li class=\"ind2\"><b>if</b> \\(R_{\\mathrm{ERM}}(a_1) \\neq R_{\\mathrm{ERM}}(a_2)\\) <b>then</b></li><li class=\"ind3\">Set \\((a^{+}, a^{-})\\) to the plans in descending score</li><li class=\"ind3\">Add \\((c, a^{+}, a^{-})\\) to \\(\\mathcal{B}_k\\)</li><li class=\"ind2\"><b>end if</b></li><li class=\"ind1\"><b>end for</b></li><li class=\"ind1\">DPO update: \\(\\pi_{\\theta_{k+1}}\\) from \\(\\mathcal{B}_k\\) with reference \\(\\pi_{\\theta_k}\\)</li><li class=\"ind0\"><b>end for</b></li><li class=\"ind0\"><b>return</b> \\(\\pi_{\\theta_K}\\)</li></ol></div>"
+        },
+        {
+          "type": "subtitle",
+          "text": "Relation to Constrained RL"
+        },
+        {
+          "type": "text",
+          "align": "justify",
+          "body": "To make the relation between Equation (2) and constrained reinforcement learning exact, define the expected discounted utility and, for each boundary \\(i \\in \\mathcal{I}\\), the expected discounted violation cost,"
+        },
+        {
+          "type": "html",
+          "align": "left",
+          "body": "<div class=\"equation\">\\[ J_U(\\theta) = \\mathbb{E}\\Big[ \\sum_{t=0}^{H} \\gamma^{t}\\, U(s_t, \\hat{a}) \\Big], \\qquad J_{C_i}(\\theta) = \\mathbb{E}\\Big[ \\sum_{t=0}^{H} \\gamma^{t}\\, C_i(s_t) \\Big], \\tag{4} \\]</div>"
+        },
+        {
+          "type": "text",
+          "align": "justify",
+          "body": "with both expectations over \\(c \\sim \\mathcal{D}\\) and \\(a \\sim \\pi_\\theta(\\cdot \\mid c)\\). Let \\(d_i \\geq 0\\) specify the tolerated discounted violation cost for boundary \\(i\\); a corresponding constrained formulation and its Lagrangian are"
+        },
+        {
+          "type": "html",
+          "align": "left",
+          "body": "<div class=\"equation\">\\[ \\max_{\\theta}\\ J_U(\\theta) \\quad \\text{s.t.} \\quad J_{C_i}(\\theta) \\leq d_i, \\qquad i \\in \\mathcal{I}, \\tag{5} \\]</div><div class=\"equation\">\\[ \\mathcal{L}(\\theta, \\mu) = J_U(\\theta) - \\sum_{i \\in \\mathcal{I}} \\mu_i \\big( J_{C_i}(\\theta) - d_i \\big), \\qquad \\mu_i \\geq 0. \\tag{6} \\]</div>"
+        },
+        {
+          "type": "text",
+          "align": "justify",
+          "body": "By linearity of expectation, \\(\\mathbb{E}[R_{\\mathrm{ERM}}(a)] = J_U(\\theta) - \\sum_{i \\in \\mathcal{I}} w_i J_{C_i}(\\theta)\\). For fixed multipliers \\(\\mu_i = w_i\\), maximizing \\(\\mathcal{L}(\\theta, \\mu)\\) over \\(\\theta\\) therefore coincides with maximizing the expected ecological reward, up to the constant \\(\\sum_{i} w_i d_i\\), which does not depend on \\(\\theta\\). The two formulations are not equivalent: the constrained form specifies bounds on expected violation costs, which Lagrangian methods enforce by adapting the multipliers during optimization, whereas the penalty form trades utility against violations at rates fixed in advance. For a boundary already transgressed at \\(s_0\\), \\(d_i = 0\\) is infeasible, so the tolerance must be read as a restoration target rather than a prohibition."
+        },
+        {
+          "type": "callout",
+          "variant": "info",
+          "body": "<b>Where the contribution lies.</b> Equation (2) can be viewed as a fixed-multiplier Lagrangian relaxation of the constrained problem (5). RLEF does not propose a new policy-optimization algorithm; its contribution lies in the feedback architecture, which grounds proposals into simulator inputs and converts their modeled consequences into Earth-system costs on which existing methods can operate. Constrained Policy Optimization (CPO) could serve as an alternative optimization layer when explicit bounds on ecological costs are preferred."
+        }
+      ]
+    },
+    {
+      "type": "group",
+      "title": "Illustrative Example: Carbon Markets",
+      "blocks": [
+        {
+          "type": "text",
+          "align": "justify",
+          "body": "International carbon-market design under the market-based components of Article 6 of the Paris Agreement illustrates how RLEF could be instantiated. The role of the language model is not to replace a numerical optimizer over a fixed simulator parameter space; when the admissible interventions are already fully specified as a compact set of numerical variables, direct optimization may be preferable. RLEF instead targets settings in which interventions originate as heterogeneous, compositional proposals expressed in language, such as combinations of pricing rules, exemptions, implementation schedules, and distributional provisions, and must first be grounded into the structured action space of a simulator."
+        },
+        {
+          "type": "list",
+          "ordered": true,
+          "align": "left",
+          "items": [
+            "<b>Action generation.</b> Large language model (LLM) agents representing different jurisdictions propose carbon-pricing mechanisms, cap-and-trade rules, offset regulations, or combinations of these instruments. The RLEF formalism above covers a single proposing policy; treating the jurisdictions as separate negotiating agents is a multi-agent extension whose interaction dynamics the paper does not formalize.",
+            "<b>Grounding.</b> Each proposal is converted into the structured parameters that the selected simulator requires.",
+            "<b>Simulation.</b> An IAM projects the economic and environmental consequences of the proposed mechanism over a specified horizon, and the choice of model determines which consequences can be evaluated. The globally aggregated DICE model can represent aggregate interactions among economic activity, emissions, the carbon cycle, and climate, but does not resolve the regional and sectoral structure needed to represent many international policy mechanisms directly. The regionally and sectorally disaggregated GCAM represents interactions among energy, water, land, climate, and economic systems across multiple geopolitical regions, although this coverage does not imply that every planetary-boundary control variable is represented; boundaries the chosen model does not represent fall outside \\(\\mathcal{I}\\).",
+            "<b>Ecological evaluation.</b> The trajectory is scored with the ERM. Distributional consequences enter the utility term rather than being treated as biophysical boundary variables, so a mechanism that reduces aggregate emissions while imposing disproportionate transition costs on lower-income regions would receive a lower utility score under a justice-sensitive specification."
+          ]
+        },
+        {
+          "type": "text",
+          "align": "justify",
+          "body": "These scores then provide feedback for policy optimization. Whether a trained model discovers better mechanisms, generalizes beyond the training simulator, or learns exploitable artifacts of the ERM is an empirical question that the paper leaves open."
+        },
+        {
+          "type": "callout",
+          "variant": "danger",
+          "body": "<b>The simulator is part of the specification.</b> IAMs such as DICE and GCAM simplify the climate-economy system and depend on assumptions about technological change, damages, behavioral responses, and discounting that are uncertain and, in places, contested. They represent responses to a mechanism through optimization or market equilibrium rather than strategic interaction, so gaming of a mechanism by its participants lies outside what such a simulator can reveal. A policy that performs well in one model may therefore be exploiting its assumptions rather than identifying a robust intervention."
+        }
+      ]
+    },
+    {
+      "type": "group",
+      "title": "Normative and Ethical Considerations",
+      "blocks": [
+        {
+          "type": "text",
+          "align": "justify",
+          "body": "Physical models estimate consequences under specified assumptions, and ecological boundaries make particular forms of environmental risk explicit, but neither determines how competing human interests should be balanced. RLEF does not resolve these questions. Its more limited advantage is that the relevant choices are represented explicitly, so they can be inspected and contested rather than remaining embedded in an evaluator's overall preference for one textual proposal over another. Explicit parameters do not make the underlying value judgments objective, but they make their role in the resulting policy easier to identify."
+        },
+        {
+          "type": "list",
+          "ordered": false,
+          "align": "left",
+          "items": [
+            "<b>Intergenerational trade-offs.</b> The utility \\(U(s_t, \\hat{a})\\), the temporal weight \\(\\gamma\\), and the penalty weights \\(w_i\\) jointly determine how near-term welfare is traded against longer-run environmental consequences. Encoding planetary boundaries does not, by itself, fix a social discount rate. Transition costs concentrated on communities that depend on carbon-intensive industries belong in the utility specification and, where appropriate, in additional constraints.",
+            "<b>The Global North–South divide.</b> Global ecological constraints do not determine how the remaining environmental burden or development opportunity should be allocated across regions. An ERM can represent historical responsibility, energy access, regional welfare, or transition burdens through the utility function or separately specified constraints rather than deriving them from planetary-boundary thresholds; which criteria to adopt is not a technical question that RLEF can settle."
+          ]
+        }
+      ]
+    },
+    {
+      "type": "group",
+      "title": "Limitations and Future Directions",
+      "blocks": [
+        {
+          "type": "text",
+          "align": "justify",
+          "body": "RLEF relocates specification risk from text-level preference judgments to the models and interfaces used to construct ecological feedback. It is presented as a conceptual and formal framework rather than an empirically validated training method."
+        },
+        {
+          "type": "list",
+          "ordered": false,
+          "align": "left",
+          "items": [
+            "<b>Grounding fidelity.</b> The ERM evaluates the simulator-executable intervention \\(\\hat{a} = g(a)\\), not the natural-language proposal \\(a\\). If \\(g\\) omits, distorts, or ambiguously interprets part of the proposal, the reward no longer corresponds to the policy the model appeared to generate, and a sufficiently optimized policy could exploit this translation layer. Constrained output formats, typed action schemas, and semantic consistency checks are possible approaches whose adequacy must be tested.",
+            "<b>Simulator misspecification and uncertainty.</b> Optimizing repeatedly against one simulator can favor policies that exploit its structural assumptions rather than policies robust across alternative models. Ensembles of models or parameterizations and uncertainty-sensitive objectives, including worst-case or risk-sensitive criteria, could reduce this dependence, while observed outcomes of implemented interventions provide evidence for assessing the simulator's predictions.",
+            "<b>Computational cost.</b> Earth-system and climate-economy models are expensive to evaluate repeatedly. Reduced-order models or learned surrogates could provide inexpensive feedback during early exploration, with higher-fidelity simulators reserved for promising or uncertain proposals, although systematic approximation errors would enter the ecological feedback signal directly.",
+            "<b>Normative specification.</b> The utility, temporal weighting, penalty weights, and normalization encode value judgments that physical models cannot settle. Formalization makes these choices explicit but does not replace political deliberation.",
+            "<b>Empirical validation.</b> RLEF requires an evaluation protocol beyond static language-model benchmarks, with planning scenarios, executable action spaces, environmental simulators, ecological metrics, observed outcomes of implemented interventions where they exist, and robustness tests for grounding errors and model uncertainty, so that RLEF-style training can be compared with preference-based alignment, constrained-RL approaches, and non-learning baselines."
+          ]
+        }
+      ]
+    }
+  ],
+  "poster": {
+    "enabled": false,
+    "title": "Poster",
+    "file": "paper_poster.pdf"
+  },
+  "slides": {
+    "enabled": true,
+    "title": "Slides",
+    "file": "RLEF_AizierjiangAiersilan_silides4AAAI2026FSS.pdf",
+    "pages": 38,
+    "imagePattern": "static/images/slides/slide-{n}.png",
+    "aspectRatio": "16 / 9",
+    "caption": "Presentation slides for the AAAI Fall Symposium Series 2026."
+  },
+  "bibtex": {
+    "title": "BibTeX",
+    "entry": "@inproceedings{yang2026rlef,\n  title={Reinforcement Learning from Ecological Feedback ({RLEF}): A Framework for Aligning Language-Model Planning with Planetary Boundaries},\n  author={Yang, Zhangfei and Aiersilan, Aizierjiang},\n  booktitle={AAAI Fall Symposium Series},\n  year={2026}\n}"
+  },
+  "footer": {
+    "showLinks": false,
+    "text": "© 2026 Aizierjiang Aiersilan."
+  }
+}

@@ -1,0 +1,14 @@
+index-template.html
+
+.vscode
+.idea
+.env
+.cache
+/cache/
+.DS_store
+temp
+.temp
+temp/
+
+# Private source material for building the page; never publish
+__reference_materials/
